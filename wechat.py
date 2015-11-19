@@ -4,7 +4,7 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 from flask import Flask, request, make_response
-
+import dicter
 import setting
 setting.coding()
 token = setting.TOKEN
@@ -39,8 +39,8 @@ def wechat_entry():
 		to_username = xml.find('ToUserName').text
 		msg_type = xml.find('MsgType').text
 		if 'text' == msg_type:
-			content = xml.find('Content').text
-			msg = '开启复读机模式. 您刚才好像在说: "' + content + '" .'
+			query = xml.find('Content').text
+			msg = dicter.translate(query)
 		else:
 			msg = '对不起, 系统正在完善中. 目前仅支持文本消息.'
 
